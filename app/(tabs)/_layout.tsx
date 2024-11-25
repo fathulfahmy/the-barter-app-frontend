@@ -1,9 +1,20 @@
-import { Platform } from "react-native";
+import { Platform, Text } from "react-native";
 import React from "react";
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 import { HapticTab } from "@/components/ui/haptic-tab";
+import { useAuth } from "@/lib/auth";
 
 const TabsLayout = () => {
+  const { token, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (!token) {
+    return <Redirect href="/login" />;
+  }
+
   return (
     <Tabs
       screenOptions={{
@@ -21,6 +32,7 @@ const TabsLayout = () => {
       <Tabs.Screen name="review" options={{ title: "Review" }} />
       <Tabs.Screen name="chat" options={{ title: "Chat" }} />
       <Tabs.Screen name="profile" options={{ title: "Profile" }} />
+      <Tabs.Screen name="index" options={{ href: null }} />
     </Tabs>
   );
 };

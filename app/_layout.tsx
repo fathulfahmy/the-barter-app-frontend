@@ -1,38 +1,16 @@
-import React, { useEffect, useState } from "react";
-import * as SplashScreen from "expo-splash-screen";
-import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { AuthProvider } from "@/lib/auth";
+import { Slot } from "expo-router";
 import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 
-SplashScreen.preventAutoHideAsync();
-
-const RootLayout = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(true);
-
-  useEffect(() => {
-    const checkAuth = () => {
-      setIsAuthenticated(true);
-    };
-    checkAuth();
-  }, []);
-
-  if (isAuthenticated === null) {
-    return null;
-  }
-
+const Root = () => {
   return (
-    <ThemeProvider value={DefaultTheme}>
-      <Stack>
-        {isAuthenticated ? (
-          <Stack.Screen name="(tabs)" />
-        ) : (
-          <Stack.Screen name="(auth)" />
-        )}
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider value={DefaultTheme}>
+        <Slot />
+      </ThemeProvider>
+    </AuthProvider>
   );
 };
 
-export default RootLayout;
+export default Root;
