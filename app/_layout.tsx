@@ -1,14 +1,19 @@
 import React from "react";
 import { AuthProvider } from "@/lib/auth";
 import { Slot } from "expo-router";
-import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
+import { PaperProvider } from "react-native-paper";
+import { useColorScheme } from "react-native";
+import { AppDarkTheme, AppLightTheme } from "@/types/react-native-paper";
 
 const Root = () => {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === "dark" ? AppDarkTheme : AppLightTheme;
+
   return (
     <AuthProvider>
-      <ThemeProvider value={DefaultTheme}>
+      <PaperProvider theme={theme}>
         <Slot />
-      </ThemeProvider>
+      </PaperProvider>
     </AuthProvider>
   );
 };
