@@ -20,7 +20,7 @@ export function useAuth() {
   const value = useContext(AuthContext);
   if (process.env.NODE_ENV !== "production") {
     if (!value) {
-      throw new Error("useAuth must be wrapped in a <TokenProvider />");
+      throw new Error("useAuth must be wrapped in a <AuthProvider />");
     }
   }
 
